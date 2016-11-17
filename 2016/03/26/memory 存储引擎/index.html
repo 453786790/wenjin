@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>memory 存储引擎 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="memory 存储引擎">
+<meta property="og:type" content="article">
+<meta property="og:title" content="memory 存储引擎">
+<meta property="og:url" content="http://yoursite.com/2016/03/26/memory 存储引擎/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="memory 存储引擎">
+<meta property="og:updated_time" content="2016-11-14T12:54:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="memory 存储引擎">
+<meta name="twitter:description" content="memory 存储引擎">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+   <!-- <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">  -->
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-memory 存储引擎" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/03/26/memory 存储引擎/" class="article-date">
+  <time datetime="2016-03-26T15:15:23.000Z" itemprop="datePublished">2016-03-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/性能优化/">性能优化</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      memory 存储引擎
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="memory-存储引擎"><a href="#memory-存储引擎" class="headerlink" title="memory 存储引擎"></a>memory 存储引擎</h1><p>内存存储引擎，直接把表保存到内存中，在磁盘中只拥有一个 .frm 文件，用来存储表结构的定义<br>通过指定 <strong>engine=memory</strong>  设置<br>当 Mysql 服务关闭时，所有 memory 引擎表中的数据全部会丢失<br>分配给 memory 引擎表的内存，正常情况不会释放，而是有该表一直持有，即使删除数据，也不会被收回，只有当整个表被删除或者重建时才会回收相关内存</p>
+<h3 id="InnoDB-存储引擎"><a href="#InnoDB-存储引擎" class="headerlink" title="InnoDB 存储引擎"></a>InnoDB 存储引擎</h3><p><strong>mysql 5.5 之后。InnoDB 被认定为默认的存储引擎</strong></p>
+<p><strong>InnoDB 有下列关键特性</strong></p>
+<ol>
+<li>设计遵循 ACID 模型，支持事物，拥有从服务崩溃中恢复的能力，能过最大限度的保护用户的数据</li>
+<li>支持行级锁，并且引入了类型 Oracle 数据库中的一致性读特性，以提升多用户并发时的读写性能</li>
+<li>InnoDB 引擎表组织数据时按照主键聚族，通过主键查找数据时性能极为优异</li>
+<li>在维护数据完整性方面，InnoDB 支持外建约束</li>
+<li>在服务器发生故障的情况下，Mysql 服务在启动时，会自动进行故障恢复</li>
+<li>InnoDB 拥有自己的缓存池，常用的数据和索引都在缓存中</li>
+<li>对于 INSERT,UPDATE,DELETE 操作，会被一种称为 change buffering 的机制自动优化</li>
+</ol>
+<p><strong>什么是 ACID ?</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">即事物的四个特性：原子性、一致性、隔离性、持久性</div></pre></td></tr></table></figure>
+<p><strong>InnoDB 存储引擎的特点</strong></p>
+<ol>
+<li>存储能力 64TB</li>
+<li>支持 MVCC</li>
+<li>支持 B-tree 索引</li>
+<li>支持 Clustered 索引</li>
+<li>外建约束</li>
+<li>查询缓存</li>
+<li>索引缓存</li>
+<li>数据缓存</li>
+<li>事物</li>
+<li>地理（三维）数据类型支持</li>
+<li>数据加密</li>
+<li>数据压缩</li>
+<li>统计信息</li>
+<li>支持行级锁</li>
+<li>备份／时间点恢复</li>
+<li>复制支持</li>
+</ol>
+<p><strong>不支持的功能</strong></p>
+<ol>
+<li>不支持 Hash 索引</li>
+<li>不支持全文索引</li>
+<li>地理数据索引支持</li>
+</ol>
+<h3 id="InnoDB-和-MyISAM-的区别"><a href="#InnoDB-和-MyISAM-的区别" class="headerlink" title="InnoDB 和 MyISAM 的区别"></a>InnoDB 和 MyISAM 的区别</h3><ul>
+<li>InnoDB不支持FULLTEXT类型的索引。</li>
+<li>InnoDB 中不保存表的具体行数，也就是说，执行select count(<em>) from table时，InnoDB要扫描一遍整个表来计算有多少行，但是MyISAM只要简单的读出保存好的行数即可。注意的是，当count(</em>)语句包含 where条件时，两种表的操作是一样的。</li>
+<li>对于AUTO_INCREMENT类型的字段，InnoDB中必须包含只有该字段的索引，但是在MyISAM表中，可以和其他字段一起建立联合索引。</li>
+<li>DELETE FROM table时，InnoDB不会重新建立表，而是一行一行的删除。</li>
+<li>LOAD TABLE FROM MASTER操作对InnoDB是不起作用的，解决方法是首先把InnoDB表改成MyISAM表，导入数据后再改成InnoDB表，但是对于使用的额外的InnoDB特性(例如外键)的表不适用。</li>
+<li>另外，InnoDB表的行锁也不是绝对的，假如在执行一个SQL语句时MySQL不能确定要扫描的范围，InnoDB表同样会锁全表，例如update table set num=1 where name like “%aaa%”</li>
+<li>两种类型最主要的差别就是Innodb 支持事务处理与外键和行级锁.而MyISAM不支持.所以MyISAM往往就容易被人认为只适合在小项目中使用。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/03/26/memory 存储引擎/" data-id="civlq7h6l0001cckotwkiftp9" class="article-share-link">Delen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Database/">Database</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/11/15/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Nieuwer</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categorieën</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/性能优化/">性能优化</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Labels</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Database/">Database</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Database/" style="font-size: 10px;">Database</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archieven</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recente berichten</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/11/15/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/26/memory 存储引擎/">memory 存储引擎</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
